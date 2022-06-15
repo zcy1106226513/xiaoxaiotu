@@ -62,7 +62,7 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-  width: 1684px;
+  width: 100%;
   height: 290px;
   background-color: #ffffff;
   .container {
@@ -72,7 +72,7 @@ export default {
     width: 1240px;
     height: 290px;
     // background-color: pink;
-    padding: 60px 0 40px 25px;
+    padding: 60px 0 40px 100px;
     dl:nth-child(1) {
       width: 269px;
       height: 190px;

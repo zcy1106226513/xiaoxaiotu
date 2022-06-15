@@ -13,12 +13,42 @@
         <a>进入网站首页</a>
       </div>
     </header>
+    <div>
+      <input v-model="user.account" />
+      <input type="password" v-model="user.password" />
+      <button @click="submit">登录</button>
+    </div>
+
   </div>
 </template>
 
 <script>
+import { login } from '@/api/login';
 
 export default {
+  name: 'Login',
+  data () {
+    return {
+      user: {
+
+        account: 'xiaotuxian001',
+        password: '123456',
+      },
+    };
+  },
+  methods: {
+    async submit () {
+      try {
+        const res = await login(this.user);
+        console.log(res);
+        this.$store.commit('login', res.result);
+        this.$router.push('/index');
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
 
 };
 </script>

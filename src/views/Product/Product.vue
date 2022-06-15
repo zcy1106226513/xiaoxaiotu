@@ -2,7 +2,18 @@
   <div>
     <div class="product">
       <ul class="product-ul">
-        <li>
+        <li v-for="(item,index) in newList" :key="index">
+          <div class="product-li">
+            <img :src="item.picture">
+          </div>
+          <div class="product-describe">
+            <p class="name">{{item.name}}</p>
+          </div>
+          <div class="product-price">
+            <p>{{item.price}}</p>
+          </div>
+        </li>
+        <!-- <li>
           <div class="product-li">
             <img src="../../assets/01.png">
           </div>
@@ -34,18 +45,7 @@
           <div class="product-price">
             <p>￥429.00</p>
           </div>
-        </li>
-        <li>
-          <div class="product-li">
-            <img src="../../assets/01.png">
-          </div>
-          <div class="product-describe">
-            <p>事事圆满缅甸天然翡翠手链</p>
-          </div>
-          <div class="product-price">
-            <p>￥429.00</p>
-          </div>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
@@ -53,6 +53,12 @@
 
 <script>
 export default {
+  props: {
+    newList: {
+      type: Array,
+      default () { return []; },
+    },
+  },
 
 };
 </script>

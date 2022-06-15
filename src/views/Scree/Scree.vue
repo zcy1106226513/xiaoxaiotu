@@ -3,14 +3,15 @@
     <!-- 轮播图 -->
     <div class="scree">
       <div class="swiper-big">
-        <Swiper></Swiper>
+
+        <Swiper :bannerList="bannerList"></Swiper>
       </div>
       <!-- 菜单目录 -->
       <ul class="menu">
-        <li v-for="(v,i) in 10" :key="v" @mouseenter="isShow = true;current=i" @mouseleave="isShow = false" :style="{'backgroundColor':isShow&&current ==i?'#27ba9b':''}">
-          <a>居家</a>
-          <a>茶咖酒具</a>
-          <a>水具杯壶</a>
+        <li v-for="(v,i) in navList" :key="i" @mouseenter="isShow = true;current=i" @mouseleave="isShow = false" :style="{'backgroundColor':isShow&&current ==i?'#27ba9b':''}">
+          <a class="title">{{v.name}}</a>
+          <a v-for="(item ,index) in v.children.slice(0,2)" :key="index" class="list">{{item.name}}</a>
+
         </li>
       </ul>
       <!-- 详细菜单 -->
@@ -21,112 +22,16 @@
           <span>根据您的购买或浏览记录推荐</span>
         </div>
         <!-- 每一项 -->
-        <div class="layer-every">
+        <div class="layer-every" v-for="(item,index) in navList[current]['goods']" :key="index">
           <!-- 图片 -->
           <div class="layer-img">
-            <img src="../../assets/05.png" alt="">
+            <img :src="item.picture" alt="">
           </div>
           <!-- 详细描述 -->
           <div class="layer-state">
-            <p>两带式软木拖鞋</p>
-            <p>鞋杯随脚型而变,舒适呵护</p>
-            <p>￥49.00</p>
-          </div>
-        </div>
-        <div class="layer-every">
-          <!-- 图片 -->
-          <div class="layer-img">
-            <img src="../../assets/05.png" alt="">
-          </div>
-          <!-- 详细描述 -->
-          <div class="layer-state">
-            <p>两带式软木拖鞋</p>
-            <p>鞋杯随脚型而变,舒适呵护</p>
-            <p>￥49.00</p>
-          </div>
-        </div>
-        <div class="layer-every">
-          <!-- 图片 -->
-          <div class="layer-img">
-            <img src="../../assets/05.png" alt="">
-          </div>
-          <!-- 详细描述 -->
-          <div class="layer-state">
-            <p>两带式软木拖鞋</p>
-            <p>鞋杯随脚型而变,舒适呵护</p>
-            <p>￥49.00</p>
-          </div>
-        </div>
-        <div class="layer-every">
-          <!-- 图片 -->
-          <div class="layer-img">
-            <img src="../../assets/05.png" alt="">
-          </div>
-          <!-- 详细描述 -->
-          <div class="layer-state">
-            <p>两带式软木拖鞋</p>
-            <p>鞋杯随脚型而变,舒适呵护</p>
-            <p>￥49.00</p>
-          </div>
-        </div>
-        <div class="layer-every">
-          <!-- 图片 -->
-          <div class="layer-img">
-            <img src="../../assets/05.png" alt="">
-          </div>
-          <!-- 详细描述 -->
-          <div class="layer-state">
-            <p>两带式软木拖鞋</p>
-            <p>鞋杯随脚型而变,舒适呵护</p>
-            <p>￥49.00</p>
-          </div>
-        </div>
-        <div class="layer-every">
-          <!-- 图片 -->
-          <div class="layer-img">
-            <img src="../../assets/05.png" alt="">
-          </div>
-          <!-- 详细描述 -->
-          <div class="layer-state">
-            <p>两带式软木拖鞋</p>
-            <p>鞋杯随脚型而变,舒适呵护</p>
-            <p>￥49.00</p>
-          </div>
-        </div>
-        <div class="layer-every">
-          <!-- 图片 -->
-          <div class="layer-img">
-            <img src="../../assets/05.png" alt="">
-          </div>
-          <!-- 详细描述 -->
-          <div class="layer-state">
-            <p>两带式软木拖鞋</p>
-            <p>鞋杯随脚型而变,舒适呵护</p>
-            <p>￥49.00</p>
-          </div>
-        </div>
-        <div class="layer-every">
-          <!-- 图片 -->
-          <div class="layer-img">
-            <img src="../../assets/05.png" alt="">
-          </div>
-          <!-- 详细描述 -->
-          <div class="layer-state">
-            <p>两带式软木拖鞋</p>
-            <p>鞋杯随脚型而变,舒适呵护</p>
-            <p>￥49.00</p>
-          </div>
-        </div>
-        <div class="layer-every">
-          <!-- 图片 -->
-          <div class="layer-img">
-            <img src="../../assets/05.png" alt="">
-          </div>
-          <!-- 详细描述 -->
-          <div class="layer-state">
-            <p>两带式软木拖鞋</p>
-            <p>鞋杯随脚型而变,舒适呵护</p>
-            <p>￥49.00</p>
+            <p>{{item.name}}</p>
+            <p>{{item.desc}}</p>
+            <p class="goods-price">{{item.price}}</p>
           </div>
         </div>
 
@@ -143,6 +48,16 @@ import Swiper from '@/components/Swiper/Swiper.vue';
 export default {
   components: {
     Swiper,
+  },
+  props: {
+    bannerList: {
+      type: Array,
+      default () { return []; },
+    },
+    navList: {
+      type: Array,
+      default () { return []; },
+    },
   },
   data () {
     return {
@@ -171,28 +86,25 @@ export default {
     width: 250px;
     height: 500px;
     background-color: rgb(0, 0, 0, 0.7);
+
     li {
-      width: 250px;
+      padding-left: 40px;
       height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      a:nth-child(1) {
-        font-size: 20px;
-        color: #fff;
-      }
-      a:nth-child(2) {
-        color: #fff;
-        padding-left: 5px;
-      }
-      a:nth-child(3) {
-        color: #fff;
-        padding-left: 5px;
-      }
-      // &:hover {
-      //   background-color: #27ba9b;
-      // }
+      line-height: 50px;
+      box-sizing: border-box;
+    }
+    .title {
+      display: inline-block;
+      box-sizing: border-box;
+      font-size: 16px;
+      margin-right: 4px;
+      color: #fff;
+    }
+    .list {
+      display: inline-block;
+      box-sizing: border-box;
+      margin-right: 4px;
+      color: #fff;
     }
 
     // 显示与影藏效果
@@ -237,25 +149,18 @@ export default {
         height: 100px;
         // background-color: #666;
         margin: 10px 0 0 10px;
+        img {
+          width: 100px;
+        }
       }
       .layer-state {
+        margin-left: 5px;
         width: 200px;
         height: 100px;
         // background-color: aqua;
         margin-top: 10px;
-        padding-left: 10px;
-        p {
-          margin-bottom: 10px;
-        }
-        p:nth-child(1) {
-          font-size: 20px;
-        }
-        p:nth-child(2) {
-          font-size: 10px;
-          color: #fff;
-        }
-        p:nth-child(3) {
-          font-size: 20px;
+        // padding-left: 10px;
+        .goods-price {
           color: red;
         }
       }
